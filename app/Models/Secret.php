@@ -31,4 +31,16 @@ class Secret extends Model
     {
         $this->attributes['createdAt'] = Carbon::parse($value)->format('Y-m-d H:i:s.v');
     }
+
+    // Get the datetime in the 'Y-m-d\TH:i:s.v\Z' format
+    public function getExpiresAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d\TH:i:s.v\Z');
+    }
+
+    // Mutator to store the datetime in the correct format
+    public function setExpiresAtAttribute($value)
+    {
+        $this->attributes['expiresAt'] = Carbon::parse($value)->format('Y-m-d H:i:s.v');
+    }
 }
