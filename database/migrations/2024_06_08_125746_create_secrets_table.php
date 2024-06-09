@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('secrets', function (Blueprint $table) {
-            $table->string('hash');
+            $table->string('hash')->primary();
             $table->string('secretText');
             $table->dateTime('createdAt', 3)->useCurrent();
             $table->dateTime('expiresAt', 3);
