@@ -12,6 +12,12 @@ class Secret extends Model
 
     public $timestamps = false;
 
+    protected $primaryKey = 'hash';
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
     protected $fillable = [
         'hash',
         'secretText',
@@ -20,27 +26,8 @@ class Secret extends Model
         'remainingViews',
     ];
 
-    // Get the datetime in the 'Y-m-d\TH:i:s.v\Z' format
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('Y-m-d\TH:i:s.v\Z');
-    }
-
-    // Mutator to store the datetime in the correct format
-    public function setCreatedAtAttribute($value)
-    {
-        $this->attributes['createdAt'] = Carbon::parse($value)->format('Y-m-d H:i:s.v');
-    }
-
-    // Get the datetime in the 'Y-m-d\TH:i:s.v\Z' format
-    public function getExpiresAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('Y-m-d\TH:i:s.v\Z');
-    }
-
-    // Mutator to store the datetime in the correct format
-    public function setExpiresAtAttribute($value)
-    {
-        $this->attributes['expiresAt'] = Carbon::parse($value)->format('Y-m-d H:i:s.v');
-    }
+    protected $casts = [
+        'createdAt' => 'datetime:Y-m-d\TH:i:s.v\Z',
+        'expiresAt' => 'datetime:Y-m-d\TH:i:s.v\Z',
+    ];
 }
