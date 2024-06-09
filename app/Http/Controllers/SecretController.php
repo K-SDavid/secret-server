@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Secret;
+use App\Services\ResponseFormatter\JsonResponseFormatter;
+use App\Services\ResponseFormatter\XmlResponseFormatter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
@@ -11,7 +13,23 @@ class SecretController extends Controller
 {
     public function index() {}
 
+    private function getResponseFormat(Request $request)
+    {
+        $acceptHeader = $request->header('Accept');
+
+        switch ($acceptHeader) {
+            case 'application/xml':
+                return new XmlResponseFormatter();
+            case 'application/json':
+            default:
+                return new JsonResponseFormatter();
+        }
+    }
+
     public function store(Request $request) {
+        //Determining the response format (currently xml or json)
+        $responseFormat = $this->getResponseFormat($request);
+
         //Validation of the parameters
         $rules = [
             'secret' => 'required|String',
@@ -20,7 +38,7 @@ class SecretController extends Controller
         ];
         $validator = \Validator::make($request->all(), $rules);
         if($validator->fails()){
-            return response()->json($validator->errors(), 400);
+            return $responseFormat->format($validator->errors()->toArray(), 400);
         }
 
         //Casting
@@ -41,6 +59,6 @@ class SecretController extends Controller
         ];
         //Object creation and DB insertion
         Secret::create($fields);
-        return response()->json('Successfully added a secret!', 200);
+        return $responseFormat->format(['message' => 'Successfully added a secret!'], 200);
     }
 }
