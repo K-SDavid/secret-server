@@ -11,8 +11,8 @@ use Illuminate\Validation\Validator;
 
 class SecretController extends Controller
 {
-    public function index() {}
-
+    //Check the request's header's Accept parameter,
+    //and decide on the response format
     private function getResponseFormat(Request $request)
     {
         $acceptHeader = $request->header('Accept');
