@@ -8,6 +8,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Endpoints](#endpoints)
+- [API availability](#api-availability)
 
 ## Project Overview
 
@@ -77,3 +78,7 @@ This is an implementation of a secret server in Laravel API. You can store and v
       <remainingViews>8</remainingViews>
   </root>
   ```
+
+## API availability
+
+<http://secret-server-production.up.railway.app>
