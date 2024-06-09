@@ -20,7 +20,7 @@ class SecretFactory extends Factory
         return [
             'hash' => bin2hex(random_bytes(16)),
             'secretText' => fake()->sentence(),
-            'expiresAt' => Carbon::now()->addMinutes(rand(1,1000))->format('Y-m-d H:i:s.v'),
+            'expiresAt' => Carbon::now('Europe/Budapest')->addMinutes(rand(1,1000))->format('Y-m-d H:i:s.v'),
             'remainingViews' => rand(1, 10),
         ];
     }
