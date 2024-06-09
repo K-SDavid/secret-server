@@ -10,6 +10,7 @@ class XmlResponseFormatter implements ResponseFormatterInterface
     public function format($data, $status)
     {
         $data = ArrayToXml::convert($data);
-        return response($data, $status)->header('Content-Type', 'application/xml');
+        return response($data, $status)
+            ->header('Content-Type', 'application/xml');
     }
 }
